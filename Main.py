@@ -11,6 +11,7 @@ class Main:
         
     def update(self):
         self.snake.move()
+        self.fruit.checkCollide(self.snake.Rect)
     
     def draw(self):
         self.fruit.draw(self.cellSize, self.screen)
