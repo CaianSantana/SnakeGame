@@ -1,5 +1,6 @@
 import pygame, sys
-from Fruit import Fruit
+from Models.Fruit import Fruit
+from Models.Snake import Snake
 
 pygame.init()
 cellSize = 40
@@ -7,7 +8,8 @@ cellNumber = 20
 screen = pygame.display.set_mode((cellSize*cellNumber, cellSize*cellNumber))
 clock = pygame.time.Clock()
 
-fruit = Fruit(cellNumber, cellSize, screen)
+fruit = Fruit(cellNumber)
+snake = Snake()
 
 while True:
     for event in pygame.event.get():
@@ -17,4 +19,6 @@ while True:
     pygame.display.update()
     clock.tick(60)
     screen.fill((175,215,70))
-    fruit.drawFruit()
+    fruit.drawFruit(cellSize, screen)
+    snake.drawSnake(cellSize, screen)
+    
