@@ -15,10 +15,3 @@ class Fruit:
     def draw(self, cellSize, screen):
         self.Rect = pygame.Rect(int(self.pos.x*cellSize),int(self.pos.y*cellSize), cellSize, cellSize)
         pygame.draw.rect(screen, ('red'), self.Rect)
-
-    def checkCollide(self, rect):
-        if(self.Rect.colliderect(rect)):
-            self.reset(self.cellNumber)
-
-
-    

@@ -27,6 +27,3 @@ class Snake:
                 self.direction = Vector2(1,0)
             case pygame.K_LEFT:
                 self.direction = Vector2(-1, 0)
-        
-                
-    

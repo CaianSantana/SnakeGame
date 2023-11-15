@@ -11,7 +11,7 @@ class Main:
         
     def update(self):
         self.snake.move()
-        self.fruit.checkCollide(self.snake.Rect)
+        self.checkCollision()
     
     def draw(self):
         self.fruit.draw(self.cellSize, self.screen)
@@ -19,3 +19,11 @@ class Main:
     
     def keyInput(self, event):
         self.snake.changeDirection(event)
+        
+    def checkCollision(self):
+        if(self.fruit.Rect.colliderect(self.snake.Rect)):
+            self.fruit.reset(self.cellNumber)
+            
+            bodyCopy = self.snake.body[:]
+            bodyCopy.insert(0,bodyCopy[0]+self.snake.direction)
+            self.snake.body = bodyCopy[:]
