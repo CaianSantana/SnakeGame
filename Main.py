@@ -17,8 +17,27 @@ class Main:
         self.checkFail()
     
     def draw(self):
+        self.drawGrass()
+        self.drawElements()
+        
+    
+    def drawElements(self):
         self.fruit.draw(self.cellSize, self.screen)
         self.snake.draw(self.cellSize, self.screen)
+        
+    def drawGrass(self):
+        grassColor = (167,209,61)
+        for row in range(self.cellNumber):
+            if row%2 == 0:
+                for col in range(self.cellNumber):
+                    if col %2 == 0:
+                        grassRect = pygame.Rect(col*self.cellSize, row* self.cellSize, self.cellSize, self.cellSize)
+                        pygame.draw.rect(self.screen, grassColor, grassRect)
+            else:
+                for col in range(self.cellNumber):
+                    if col %2 != 0:
+                        grassRect = pygame.Rect(col*self.cellSize, row* self.cellSize, self.cellSize, self.cellSize)
+                        pygame.draw.rect(self.screen, grassColor, grassRect)
     
     def keyInput(self, event):
         self.snake.changeDirection(event)
