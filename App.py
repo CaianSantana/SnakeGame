@@ -1,4 +1,4 @@
-import pygame, sys
+import pygame
 from Main import Main
 
 pygame.init()
@@ -14,8 +14,7 @@ pygame.time.set_timer(SCREEN_UPDATE,150)
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
+            mainGame.gameOver()
         if event.type == SCREEN_UPDATE:
             mainGame.update()
         if event.type == pygame.KEYDOWN:

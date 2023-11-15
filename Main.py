@@ -1,3 +1,5 @@
+import sys
+import pygame
 from Models.Fruit import Fruit
 from Models.Snake import Snake
 
@@ -27,3 +29,11 @@ class Main:
             bodyCopy = self.snake.body[:]
             bodyCopy.insert(0,bodyCopy[0]+self.snake.direction)
             self.snake.body = bodyCopy[:]
+        if(self.snake.body[0].x == -1 or self.snake.body[0].y == -1
+           or self.snake.body[0].x == self.cellNumber or self.snake.body[0].y == self.cellNumber):
+            print("Game Over")
+            self.gameOver()
+            
+    def gameOver(self):
+        pygame.quit()
+        sys.exit()
