@@ -3,7 +3,7 @@ from pygame.math import Vector2
 
 class Snake:
     def __init__(self):
-        self.body = [Vector2(5,10), Vector2(6,10), Vector2(7,10)]
+        self.body = [Vector2(7,10), Vector2(6,10), Vector2(5,10)]
         self.direction = Vector2(1,0)
         self.Rect = 0
 
@@ -20,10 +20,19 @@ class Snake:
     def changeDirection(self, event):
         match event:
             case pygame.K_UP:
-                self.direction = Vector2(0,-1)
+                if not self.direction.y == 1:
+                    self.direction = Vector2(0,-1)
             case pygame.K_DOWN:
-                self.direction = Vector2(0,1)
+                if not self.direction.y == -1:
+                    self.direction = Vector2(0,1)
             case pygame.K_RIGHT:
-                self.direction = Vector2(1,0)
+                if not self.direction.x == -1:
+                    self.direction = Vector2(1,0)
             case pygame.K_LEFT:
-                self.direction = Vector2(-1, 0)
+                if not self.direction.x == 1:
+                    self.direction = Vector2(-1, 0)
+    
+    def addBlock(self):
+        bodyCopy = self.body[:]
+        bodyCopy.insert(0,bodyCopy[0]+self.direction)
+        self.body = bodyCopy[:]

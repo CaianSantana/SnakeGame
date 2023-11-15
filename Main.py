@@ -14,6 +14,7 @@ class Main:
     def update(self):
         self.snake.move()
         self.checkCollision()
+        self.checkFail()
     
     def draw(self):
         self.fruit.draw(self.cellSize, self.screen)
@@ -24,16 +25,17 @@ class Main:
         
     def checkCollision(self):
         if(self.fruit.Rect.colliderect(self.snake.Rect)):
-            self.fruit.reset(self.cellNumber)
-            
-            bodyCopy = self.snake.body[:]
-            bodyCopy.insert(0,bodyCopy[0]+self.snake.direction)
-            self.snake.body = bodyCopy[:]
-        if(self.snake.body[0].x == -1 or self.snake.body[0].y == -1
-           or self.snake.body[0].x == self.cellNumber or self.snake.body[0].y == self.cellNumber):
-            print("Game Over")
+            self.fruit.randomize(self.cellNumber)
+            self.snake.addBlock()
+    
+    def checkFail(self):
+        if not 0 <= self.snake.body[0].x < self.cellNumber or not 0 <= self.snake.body[0].y < self.cellNumber:
             self.gameOver()
+        for block in self.snake.body[1:]:
+            if block == self.snake.body[0]:
+                self.gameOver()
             
     def gameOver(self):
+        print("Game Over")
         pygame.quit()
         sys.exit()
