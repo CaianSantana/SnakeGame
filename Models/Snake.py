@@ -6,13 +6,77 @@ class Snake:
         self.body = [Vector2(7,10), Vector2(6,10), Vector2(5,10)]
         self.direction = Vector2(1,0)
         self.rect = 0
+        
+        self.headLeft = pygame.image.load("Graphics/head_left.png").convert_alpha()
+        self.headRight = pygame.image.load("Graphics/head_right.png").convert_alpha()
+        self.headUp = pygame.image.load("Graphics/head_up.png").convert_alpha()
+        self.headDown = pygame.image.load("Graphics/head_down.png").convert_alpha()
+        
+        self.bodyBottomLeft = pygame.image.load("Graphics/body_bottomleft.png").convert_alpha()
+        self.bodyBottomRight = pygame.image.load("Graphics/body_bottomright.png").convert_alpha()
+        self.bodyTopLeft = pygame.image.load("Graphics/body_topleft.png").convert_alpha()
+        self.bodyTopRight = pygame.image.load("Graphics/body_topright.png").convert_alpha()
+        self.bodyHorizontal = pygame.image.load("Graphics/body_horizontal.png").convert_alpha()
+        self.bodyVertical = pygame.image.load("Graphics/body_vertical.png").convert_alpha()
+        
+        
+        self.tailLeft = pygame.image.load("Graphics/tail_left.png").convert_alpha()
+        self.tailRight = pygame.image.load("Graphics/tail_right.png").convert_alpha()
+        self.tailUp = pygame.image.load("Graphics/tail_up.png").convert_alpha()
+        self.tailDown = pygame.image.load("Graphics/tail_down.png").convert_alpha()
 
     def draw(self, cellSize, screen):
-        for block in self.body:
+        self.updateHeadGraphics()
+        
+        self.updateTailGraphics()
+        
+        for index, block in enumerate(self.body):
+            
+            self.updateChestGraphics(index)
             xPos = int(block.x*cellSize)
             yPos = int(block.y*cellSize)
             self.rect = pygame.Rect(xPos, yPos, cellSize, cellSize)
-            pygame.draw.rect(screen, ('green'), self.rect)
+            
+            if index==0:
+                screen.blit(self.head, self.rect)
+            elif block == self.body[-1]:
+                screen.blit(self.tail, self.rect)
+            else:
+                screen.blit(self.chest, self.rect)
+    
+    def updateHeadGraphics(self):
+        headRelation = self.body[1] - self.body[0]
+        if headRelation == Vector2(1,0):
+            self.head = self.headLeft
+        elif headRelation == Vector2(-1,0):
+            self.head = self.headRight
+        elif headRelation == Vector2(0,-1):
+            self.head = self.headDown
+        else:
+            self.head = self.headUp
+    def updateChestGraphics(self, index):
+        chestRelation = self.body[index-1] - self.body[index]
+        if chestRelation == Vector2(1,0) or chestRelation == Vector2(-1,0):
+            self.chest = self.bodyHorizontal
+        else:
+            self.chest = self.bodyVertical
+            
+    def updateTailGraphics(self):
+        tailRelation = self.body[-1] - self.body[-2]
+        if tailRelation == Vector2(1,0):
+            self.tail = self.tailRight
+        elif tailRelation == Vector2(-1,0):
+            self.tail = self.tailLeft
+        elif tailRelation == Vector2(0,-1):
+            self.tail = self.tailUp
+        else:
+            self.tail = self.tailDown 
+    
+    
+                
+            
+
+        
     def move(self):
         bodyCopy = self.body[:-1]
         bodyCopy.insert(0,bodyCopy[0]+self.direction)
