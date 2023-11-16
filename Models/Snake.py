@@ -27,12 +27,12 @@ class Snake:
 
     def draw(self, cellSize, screen):
         self.updateHeadGraphics()
-        
         self.updateTailGraphics()
         
         for index, block in enumerate(self.body):
             
-            self.updateChestGraphics(index)
+            self.chest = self.updateChestGraphics(index)
+                
             xPos = int(block.x*cellSize)
             yPos = int(block.y*cellSize)
             self.rect = pygame.Rect(xPos, yPos, cellSize, cellSize)
@@ -54,13 +54,16 @@ class Snake:
             self.head = self.headDown
         else:
             self.head = self.headUp
-    def updateChestGraphics(self, index):
-        chestRelation = self.body[index-1] - self.body[index]
-        if chestRelation == Vector2(1,0) or chestRelation == Vector2(-1,0):
-            self.chest = self.bodyHorizontal
-        else:
-            self.chest = self.bodyVertical
             
+    def updateChestGraphics(self, index):
+        previousBlock = self.body[index-1]
+        currentBlock = self.body[index]
+        chestRelation = previousBlock - currentBlock
+        if chestRelation == Vector2(1,0) or chestRelation == Vector2(-1,0):
+            return self.bodyHorizontal
+        else:
+            return self.bodyVertical
+    
     def updateTailGraphics(self):
         tailRelation = self.body[-1] - self.body[-2]
         if tailRelation == Vector2(1,0):
@@ -71,16 +74,12 @@ class Snake:
             self.tail = self.tailUp
         else:
             self.tail = self.tailDown 
-    
-    
-                
-            
-
         
     def move(self):
         bodyCopy = self.body[:-1]
         bodyCopy.insert(0,bodyCopy[0]+self.direction)
         self.body = bodyCopy[:]
+        
     def changeDirection(self, event):
         match event:
             case pygame.K_UP:

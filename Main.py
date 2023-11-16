@@ -42,8 +42,8 @@ class Main:
     def keyInput(self, event):
         self.snake.changeDirection(event)
         
-    def checkCollision(self):
-        if(self.fruit.rect.colliderect(self.snake.rect)):
+    def checkCollision(self):        
+        if(self.snake.body[0].x == self.fruit.pos.x and self.snake.body[0].y == self.fruit.pos.y):
             self.fruit.randomize(self.cellNumber)
             self.snake.addBlock()
     
