@@ -43,7 +43,7 @@ class Main:
         self.snake.changeDirection(event)
         
     def checkCollision(self):
-        if(self.fruit.Rect.colliderect(self.snake.Rect)):
+        if(self.fruit.rect.colliderect(self.snake.rect)):
             self.fruit.randomize(self.cellNumber)
             self.snake.addBlock()
     
