@@ -50,7 +50,12 @@ class Main:
         scoreX = int(self.cellSize*self.cellNumber - 60)
         scoreY = int(self.cellSize * self.cellNumber - 40)
         scoreRect = scoreSurface.get_rect(center = (scoreX, scoreY))
+        fruitRect = self.fruit.sprite.get_rect(midright = (scoreRect.left, scoreRect.centery))
+        bgRect = pygame.Rect(fruitRect.left, fruitRect.top, fruitRect.width + scoreRect.width + 8 ,fruitRect.height)
+        pygame.draw.rect(self.screen, (167,209,61), bgRect)
         self.screen.blit(scoreSurface, scoreRect)
+        self.screen.blit(self.fruit.sprite, fruitRect)
+        pygame.draw.rect(self.screen,(0, 0, 0), bgRect, 2)
     
     def keyInput(self, event):
         self.snake.changeDirection(event)
@@ -62,18 +67,22 @@ class Main:
     
     def checkFail(self):
         if not 0 <= self.snake.body[0].x < self.cellNumber or not 0 <= self.snake.body[0].y < self.cellNumber:
-            self.gameOver()
+            self.reset()
         for block in self.snake.body[1:]:
             if block == self.snake.body[0]:
-                self.gameOver()
+                self.reset()
                 
     def line(self, text, color=(255,255,255), antialias=False, background=None):
         return pygame.font.Font.render(text, antialias, color, background)
     def size(self, text):
         return pygame.font.Font.size(self.cellSize, text)
         
-            
-    def gameOver(self):
+    def reset(self):
         print("Game Over")
+        self.snake.reset()
+        
+        
+    
+    def gameOver(self):
         pygame.quit()
         sys.exit()

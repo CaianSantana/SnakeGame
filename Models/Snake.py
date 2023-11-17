@@ -4,7 +4,7 @@ from pygame.math import Vector2
 class Snake:
     def __init__(self):
         self.body = [Vector2(7,10), Vector2(6,10), Vector2(5,10)]
-        self.direction = Vector2(1,0)
+        self.direction = Vector2(0,0)
         self.rect = 0
         
         self.headLeft = pygame.image.load("Graphics/head_left.png").convert_alpha()
@@ -76,9 +76,10 @@ class Snake:
             self.tail = self.tailDown 
         
     def move(self):
-        bodyCopy = self.body[:-1]
-        bodyCopy.insert(0,bodyCopy[0]+self.direction)
-        self.body = bodyCopy[:]
+        if not self.direction.x == 0 or not self.direction.y == 0:
+            bodyCopy = self.body[:-1]
+            bodyCopy.insert(0,bodyCopy[0]+self.direction)
+            self.body = bodyCopy[:]
         
     def changeDirection(self, event):
         match event:
@@ -99,3 +100,7 @@ class Snake:
         bodyCopy = self.body[:]
         bodyCopy.insert(0,bodyCopy[0]+self.direction)
         self.body = bodyCopy[:]
+        
+    def reset(self):
+        self.body = [Vector2(7,10), Vector2(6,10), Vector2(5,10)]
+        self.direction = Vector2(0,0)

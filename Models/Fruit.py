@@ -15,5 +15,3 @@ class Fruit:
     def draw(self, cellSize, screen):
         self.rect = pygame.Rect(int(self.pos.x*cellSize),int(self.pos.y*cellSize), cellSize, cellSize)
         screen.blit(self.sprite, self.rect)
-        #pygame.draw.rect(screen, ('red'), self.Rect)
-    
