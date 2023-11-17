@@ -22,8 +22,6 @@ class Main:
         self.drawGrass()
         self.drawElements()
         self.drawScore()
-        
-    
     def drawElements(self):
         self.fruit.draw(self.cellSize, self.screen)
         self.snake.draw(self.cellSize, self.screen)
@@ -40,10 +38,6 @@ class Main:
                     if col %2 != 0:
                         grassRect = pygame.Rect(col*self.cellSize, row* self.cellSize, self.cellSize, self.cellSize)
                         pygame.draw.rect(self.screen, grassColor, grassRect)
-    def drawText(self):
-        text = self.score
-        size = size(text)
-        line = line(text)
     def drawScore(self):
         scoreText = str(len(self.snake.body)-3)
         scoreSurface = self.gameFont.render(scoreText, False, (0, 0, 0))
@@ -72,16 +66,9 @@ class Main:
             if block == self.snake.body[0]:
                 self.reset()
                 
-    def line(self, text, color=(255,255,255), antialias=False, background=None):
-        return pygame.font.Font.render(text, antialias, color, background)
-    def size(self, text):
-        return pygame.font.Font.size(self.cellSize, text)
-        
     def reset(self):
         print("Game Over")
         self.snake.reset()
-        
-        
     
     def gameOver(self):
         pygame.quit()
