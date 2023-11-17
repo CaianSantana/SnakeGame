@@ -39,7 +39,8 @@ class Main:
                         grassRect = pygame.Rect(col*self.cellSize, row* self.cellSize, self.cellSize, self.cellSize)
                         pygame.draw.rect(self.screen, grassColor, grassRect)
     def drawScore(self):
-        scoreText = str(len(self.snake.body)-3)
+        self.score = str(len(self.snake.body)-3)
+        scoreText = self.score
         scoreSurface = self.gameFont.render(scoreText, False, (0, 0, 0))
         scoreX = int(self.cellSize*self.cellNumber - 60)
         scoreY = int(self.cellSize * self.cellNumber - 40)
@@ -67,7 +68,7 @@ class Main:
                 self.reset()
                 
     def reset(self):
-        print("Game Over")
+        print("Game Over\nScore: "+ str(self.score))
         self.snake.reset()
     
     def gameOver(self):
