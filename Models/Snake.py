@@ -31,18 +31,33 @@ class Snake:
         
         for index, block in enumerate(self.body):
             
-            self.chest = self.updateChestGraphics(index)
-                
+           # self.chest = self.updateChestGraphics(index)
+            
+            
             xPos = int(block.x*cellSize)
             yPos = int(block.y*cellSize)
             self.rect = pygame.Rect(xPos, yPos, cellSize, cellSize)
-            
+    
             if index==0:
                 screen.blit(self.head, self.rect)
             elif block == self.body[-1]:
                 screen.blit(self.tail, self.rect)
             else:
-                screen.blit(self.chest, self.rect)
+                previousBlock = self.body[index+1] - block
+                nextBlock = self.body[index-1] - block
+                if previousBlock.x == nextBlock.x:
+                    screen.blit(self.bodyVertical, self.rect)
+                elif previousBlock.y == nextBlock.y:
+                    screen.blit(self.bodyHorizontal, self.rect)
+                else:
+                    if previousBlock.x == -1 and nextBlock.y == -1 or  previousBlock.y == -1 and nextBlock.x ==-1:
+                        screen.blit(self.bodyTopLeft, self.rect)
+                    elif previousBlock.x == -1 and nextBlock.y == 1 or  previousBlock.y == 1 and nextBlock.x ==-1:
+                        screen.blit(self.bodyBottomLeft, self.rect)
+                    elif previousBlock.x == 1 and nextBlock.y == -1 or  previousBlock.y == -1 and nextBlock.x ==1:
+                        screen.blit(self.bodyTopRight, self.rect)
+                    else:
+                        screen.blit(self.bodyBottomRight, self.rect)
     
     def updateHeadGraphics(self):
         headRelation = self.body[1] - self.body[0]
@@ -54,15 +69,7 @@ class Snake:
             self.head = self.headDown
         else:
             self.head = self.headUp
-            
-    def updateChestGraphics(self, index):
-        previousBlock = self.body[index-1]
-        currentBlock = self.body[index]
-        chestRelation = previousBlock - currentBlock
-        if chestRelation == Vector2(1,0) or chestRelation == Vector2(-1,0):
-            return self.bodyHorizontal
-        else:
-            return self.bodyVertical
+        
     
     def updateTailGraphics(self):
         tailRelation = self.body[-1] - self.body[-2]
