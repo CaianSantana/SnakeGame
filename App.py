@@ -1,16 +1,8 @@
-import pygame
-from Main import Main
+from Setttings.Main import Main
+from Setttings.Configuration import screen, pygame, clock, SCREEN_UPDATE
 
 pygame.init()
-cellSize = 40
-cellNumber = 20
-screen = pygame.display.set_mode((cellSize*cellNumber, cellSize*cellNumber))
-clock = pygame.time.Clock()
-
-mainGame = Main(cellNumber, cellSize, screen)
-
-SCREEN_UPDATE = pygame.USEREVENT
-pygame.time.set_timer(SCREEN_UPDATE,150)
+mainGame = Main()
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

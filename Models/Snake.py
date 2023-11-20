@@ -1,6 +1,6 @@
 import pygame, random
 from pygame.math import Vector2
-
+from Setttings.Configuration import cellSize, screen
 class Snake:
     def __init__(self):
         self.body = [Vector2(7,10), Vector2(6,10), Vector2(5,10)]
@@ -25,14 +25,11 @@ class Snake:
         self.tailUp = pygame.image.load("Graphics/tail_up.png").convert_alpha()
         self.tailDown = pygame.image.load("Graphics/tail_down.png").convert_alpha()
 
-    def draw(self, cellSize, screen):
+    def draw(self):
         self.updateHeadGraphics()
         self.updateTailGraphics()
         
         for index, block in enumerate(self.body):
-            
-           # self.chest = self.updateChestGraphics(index)
-            
             
             xPos = int(block.x*cellSize)
             yPos = int(block.y*cellSize)
